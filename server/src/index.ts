@@ -1,11 +1,13 @@
 import express, {Request, Response} from 'express';
 import mongoose from 'mongoose';  
 import dotenv from 'dotenv';
+import cors from 'cors';
 import Deck from './models/Deck';
 const app = express(); // create express app
 dotenv.config();
 
 app.use(express.json()); // use express json middleware to parse json body
+app.use(cors({origin: "*"})); // use cors middleware to allow cross origin resource sharing
 
 app.get('/', (req: Request, res:Response) => {  // root endpoint
     res.send('Hello World');
