@@ -35,7 +35,7 @@ function App() {
       }
     };
     fetchDecks();
-  }, []);
+  }, [decks]);
 
   const handleDeleteDeck = async (id: string) => {
     try {
@@ -49,12 +49,21 @@ function App() {
   return (
     <>
       <form onSubmit={handleCreateDeck}>
-        <label>Deck Title</label>
+        <label
+          style={{
+            marginRight: "10px",
+          }}
+        >
+          Deck Title
+        </label>
         <input
           type="text"
           name="deckTitle"
           value={deckTitle}
           onChange={handleChange}
+          style={{
+            marginRight: "10px",
+          }}
         ></input>
         <button type="submit">Create Deck</button>
       </form>
