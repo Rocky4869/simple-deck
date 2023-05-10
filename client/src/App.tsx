@@ -70,7 +70,12 @@ function App() {
       <div>
         {decks.map((deck: any) => (
           <div key={deck._id} className="decks">
-            <button onClick={() => handleDeleteDeck(deck._id)}>X</button>
+            <button
+              onClick={() => handleDeleteDeck(deck._id)}
+              className="deckButton"
+            >
+              X
+            </button>
             <div>{deck.title}</div>
           </div>
         ))}
