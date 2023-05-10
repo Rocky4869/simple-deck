@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
+import Deck from "./Deck.tsx";
 import "./index.css";
-import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -10,8 +11,8 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "about",
-    element: <div>About</div>,
+    path: "/decks/:id",
+    element: <Deck />,
   },
 ]);
 
