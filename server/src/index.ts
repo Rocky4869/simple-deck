@@ -21,6 +21,11 @@ app.post('/decks', async (req: Request, res:Response) => { // create a new deck
     res.json(createdDeck); // return the deck in the response
 });
 
+app.get('/decks', async (req: Request, res:Response) => { // get all decks
+    const decks = await Deck.find({}); // find all decks in the database
+    res.json(decks); // return the decks in the response
+});
+
 
 const connectDB = async () => {
     try {
