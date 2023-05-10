@@ -37,6 +37,15 @@ function App() {
     fetchDecks();
   }, []);
 
+  const handleDeleteDeck = async (id: string) => {
+    try {
+      const res = await axios.delete(`http://localhost:3000/decks/${id}`);
+      console.debug(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <form onSubmit={handleCreateDeck}>
@@ -51,7 +60,10 @@ function App() {
       </form>
       <div>
         {decks.map((deck: any) => (
-          <div>{deck.title}</div>
+          <div key={deck._id} className="decks">
+            <button onClick={() => handleDeleteDeck(deck._id)}>X</button>
+            <div>{deck.title}</div>
+          </div>
         ))}
       </div>
     </>

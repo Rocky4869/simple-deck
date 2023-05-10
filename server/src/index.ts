@@ -26,6 +26,10 @@ app.get('/decks', async (req: Request, res:Response) => { // get all decks
     res.json(decks); // return the decks in the response
 });
 
+app.delete('/decks/:id', async (req: Request, res:Response) => { // delete a deck
+    const deletedDeck = await Deck.findByIdAndDelete(req.params.id); // find the deck by id and delete it
+    res.json("successfully deleted the deck"); // return the deleted deck in the response
+});
 
 const connectDB = async () => {
     try {
