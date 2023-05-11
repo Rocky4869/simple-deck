@@ -68,10 +68,14 @@ const Deck = () => {
 
   return (
     <>
-      <Link to={"/"}>Back to Homepage</Link>
-      <form onSubmit={handleCreateCard} style={{ marginTop: "20px" }}>
+      <Link to={"/"} className="home-button">
+        Back to Homepage
+      </Link>
+      <form onSubmit={handleCreateCard} style={{ marginTop: "40px" }}>
         {/* try to set input of title and input of description */}
-        <label style={{ marginRight: "10px" }}>Deck - Cards</label>
+        <label style={{ marginRight: "10px", fontSize: "30px" }}>
+          Deck - Cards
+        </label>
         <div className="card-input-container">
           <div className="card-input">
             <label>Title</label>
