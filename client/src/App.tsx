@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import "./App.css";
 import { Link } from "react-router-dom";
 import { getDecks } from "./api/getDecks";
+import { createDeck } from "./api/createDeck";
+import { deleteDeck } from "./api/deleteDeck";
 
 type TDeck = {
   // define type for deck
@@ -21,10 +22,7 @@ function App() {
   const handleCreateDeck = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      const res = await axios.post("http://localhost:3000/decks", {
-        // create new deck
-        title: deckTitle,
-      });
+      const res = await createDeck(deckTitle); // create new deck
       setDecks([...decks, res.data]); // add new deck to state
       setDeckTitle(""); // reset deck title
     } catch (err) {
@@ -47,7 +45,7 @@ function App() {
 
   const handleDeleteDeck = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:3000/decks/${id}`);
+      await deleteDeck(id); // delete deck
       setDecks(decks.filter((deck: TDeck) => deck._id !== id)); // remove deck from state
     } catch (err) {
       console.log(err);
