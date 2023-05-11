@@ -1,5 +1,6 @@
 {
   "name": "client",
+  "homepage": "https://rocky4869.github.io/simple-deck",
   "private": true,
   "version": "0.0.0",
   "type": "module",
