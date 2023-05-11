@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import "./App.css";
 import { useParams } from "react-router-dom";
+import { getCards } from "./api/getCards";
+import { deleteCard } from "./api/deleteCard";
+import { createCard } from "./api/createCard";
+import "./App.css";
 
 type Card = {
   title: string;
@@ -16,7 +18,8 @@ const Deck = () => {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/decks/${id}`); // get all decks
+        if (!id) return;
+        const res = await getCards(id); // get cards for deck with id
         const cards = res.data.cards;
         setCards(cards); // set cards state
       } catch (err) {
@@ -28,9 +31,8 @@ const Deck = () => {
 
   const handleDeleteCard = async (index: number) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:3000/decks/${id}/${index}` // delete card
-      );
+      if (!id) return;
+      const res = await deleteCard(id, index); // delete card
       const cards = res.data.cards;
       setCards(cards); // set cards state
     } catch (err) {
@@ -40,12 +42,11 @@ const Deck = () => {
 
   const handleCreateCard = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
+      e.preventDefault();
+      if (!id) return;
       const title = "hello world";
       const description = text;
-      const res = await axios.post(`http://localhost:3000/decks/${id}/cards`, {
-        title,
-        description,
-      }); // create new card
+      const res = await createCard(id, title, description); // create new card
       const cards = res.data.cards;
       setCards(cards); // set cards state
       setText(""); // reset text
