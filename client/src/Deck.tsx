@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { getCards } from "./api/getCards";
 import { deleteCard } from "./api/deleteCard";
 import { createCard } from "./api/createCard";
-import { redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./App.css";
 
@@ -64,7 +63,7 @@ const Deck = () => {
   return (
     <>
       <Link to={"/"}>Back to Homepage</Link>
-      <form onSubmit={handleCreateCard}>
+      <form onSubmit={handleCreateCard} style={{ marginTop: "20px" }}>
         <label style={{ marginRight: "10px" }}>Deck - Cards</label>
         <input type="text" value={text} onChange={handleChange}></input>
         <button
@@ -77,18 +76,14 @@ const Deck = () => {
         </button>
       </form>
       {cards.map((card: Card, index: number) => (
-        <div
-          key={index}
-          style={{
-            marginTop: "20px",
-          }}
-        >
+        <div key={index} className="cards">
           <div>{card.title}</div>
           <div>{card.description}</div>
           <button
             onClick={() => {
               handleDeleteCard(index);
             }}
+            className="cardButton"
           >
             X
           </button>
