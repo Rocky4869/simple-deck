@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 
 const DeckSchema = new Schema({ // create mongoose schema
     title: String,
+    cards: [Object],
 });
 
 const Model = mongoose.model('Deck', DeckSchema); // create mongoose model

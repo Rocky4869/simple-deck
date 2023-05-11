@@ -31,6 +31,41 @@ app.delete('/decks/:id', async (req: Request, res:Response) => { // delete a dec
     res.json("successfully deleted the deck"); // return the deleted deck in the response
 });
 
+app.post('/decks/:id/cards', async (req: Request, res:Response) => { // create a new card
+    const newCard = req.body;
+    const deck = await Deck.findById(req.params.id); // find the deck by id
+    if (deck) {
+        deck.cards.push(newCard); // push the card to the deck
+        const updatedDeck = await deck.save(); // save the deck to the database
+        res.json(updatedDeck); // return the updated deck in the response
+    } else {
+        res.status(404); // if the deck is not found
+        throw new Error('Deck not found'); // throw an error
+    }
+});
+
+app.get('/decks/:id', async (req: Request, res:Response) => { // get all cards in a deck
+    const deck = await Deck.findById(req.params.id); // find the deck by id
+    if (deck) {
+        res.json(deck); // return the cards in the response
+    } else {
+        res.status(404); // if the deck is not found
+        throw new Error('Deck not found'); // throw an error
+    }
+});
+
+app.delete('/decks/:id/:index', async (req: Request, res:Response) => { // delete a card
+    const deck = await Deck.findById(req.params.id); // find the deck by id
+    if (deck) {
+        deck.cards.splice(parseInt(req.params.index), 1); // remove the card from the deck
+        const updatedDeck = await deck.save(); // save the deck to the database
+        res.json(updatedDeck); // return the updated deck in the response
+    } else {
+        res.status(404); // if the deck is not found
+        throw new Error('Deck not found'); // throw an error
+    }
+});
+
 const connectDB = async () => {
     try {
         await mongoose.connect(`mongodb+srv://rockytam4869:${process.env.DATABASE_PASSWORD}@cluster0.xihgmtm.mongodb.net/?retryWrites=true&w=majority`)

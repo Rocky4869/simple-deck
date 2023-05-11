@@ -23,7 +23,7 @@ function App() {
     try {
       e.preventDefault();
       const res = await createDeck(deckTitle); // create new deck
-      setDecks([...decks, res.data]); // add new deck to state
+      setDecks((prevDecks) => [...prevDecks, res.data]); // add new deck to state
       setDeckTitle(""); // reset deck title
     } catch (err) {
       console.log(err);
@@ -74,7 +74,7 @@ function App() {
         <button type="submit">Create Deck</button>
       </form>
       <div>
-        {decks.map((deck) => (
+        {decks.map((deck: TDeck) => (
           <div key={deck._id} className="decks">
             <button
               onClick={() => handleDeleteDeck(deck._id)}
