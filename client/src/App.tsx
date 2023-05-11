@@ -67,6 +67,7 @@ function App() {
           name="deckTitle"
           value={deckTitle}
           onChange={handleChange}
+          required
           style={{
             marginRight: "10px",
           }}

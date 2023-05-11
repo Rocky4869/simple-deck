@@ -65,7 +65,12 @@ const Deck = () => {
       <Link to={"/"}>Back to Homepage</Link>
       <form onSubmit={handleCreateCard} style={{ marginTop: "20px" }}>
         <label style={{ marginRight: "10px" }}>Deck - Cards</label>
-        <input type="text" value={text} onChange={handleChange}></input>
+        <input
+          type="text"
+          value={text}
+          required
+          onChange={handleChange}
+        ></input>
         <button
           style={{
             marginLeft: "10px",

@@ -90,6 +90,6 @@
   border: none;
 }
 
-.deckButton:focus {
+.cardButton:focus {
   outline: none;
 }
