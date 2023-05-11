@@ -13,7 +13,8 @@ type Card = {
 
 const Deck = () => {
   const [cards, setCards] = useState<Card[]>([]); // cards state
-  const [text, setText] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const { id } = useParams(); // get id from url
 
   useEffect(() => {
@@ -45,35 +46,56 @@ const Deck = () => {
     try {
       e.preventDefault();
       if (!id) return;
-      const title = "hello world";
-      const description = text;
       const res = await createCard(id, title, description); // create new card
       const cards = res.data.cards;
       setCards(cards); // set cards state
-      setText(""); // reset text
+      setTitle(""); // reset text
+      setDescription(""); // reset text
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+  const handleTitleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const handleDescriptionChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDescription(e.target.value);
   };
 
   return (
     <>
       <Link to={"/"}>Back to Homepage</Link>
       <form onSubmit={handleCreateCard} style={{ marginTop: "20px" }}>
+        {/* try to set input of title and input of description */}
         <label style={{ marginRight: "10px" }}>Deck - Cards</label>
-        <input
-          type="text"
-          value={text}
-          required
-          onChange={handleChange}
-        ></input>
+        <div className="card-input-container">
+          <div className="card-input">
+            <label>Title</label>
+            <input
+              type="text"
+              value={title}
+              required
+              onChange={(e) => handleTitleChange(e)}
+            ></input>
+          </div>
+          <div className="card-input">
+            <label>Description</label>
+            <input
+              type="text"
+              value={description}
+              required
+              onChange={(e) => handleDescriptionChange(e)}
+            ></input>
+          </div>
+        </div>
         <button
           style={{
             marginLeft: "10px",
+            marginTop: "30px",
           }}
           type="submit"
         >
@@ -82,8 +104,8 @@ const Deck = () => {
       </form>
       {cards.map((card: Card, index: number) => (
         <div key={index} className="cards">
-          <div>{card.title}</div>
-          <div>{card.description}</div>
+          <div>Title: {card.title}</div>
+          <div> Description: {card.description}</div>
           <button
             onClick={() => {
               handleDeleteCard(index);

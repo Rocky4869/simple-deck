@@ -15,7 +15,7 @@ app.get('/', (req: Request, res:Response) => {  // root endpoint
 
 app.post('/decks', async (req: Request, res:Response) => { // create a new deck
     const newDeck = new Deck({
-        title: req.body.title,
+        title: req.body.title, 
     });
     const createdDeck = await newDeck.save() // save the deck to the database
     res.json(createdDeck); // return the deck in the response

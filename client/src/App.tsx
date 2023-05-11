@@ -13,7 +13,7 @@ type TDeck = {
 
 function App() {
   const [deckTitle, setDeckTitle] = useState("");
-  const [decks, setDecks] = useState<TDeck[]>([]);
+  const [decks, setDecks] = useState<TDeck[]>([]); // array of objects
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDeckTitle(e.target.value);
