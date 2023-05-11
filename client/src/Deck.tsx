@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { getCards } from "./api/getCards";
 import { deleteCard } from "./api/deleteCard";
 import { createCard } from "./api/createCard";
+import { redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./App.css";
 
 type Card = {
@@ -61,6 +63,7 @@ const Deck = () => {
 
   return (
     <>
+      <Link to={"/"}>Back to Homepage</Link>
       <form onSubmit={handleCreateCard}>
         <label style={{ marginRight: "10px" }}>Deck - Cards</label>
         <input type="text" value={text} onChange={handleChange}></input>
