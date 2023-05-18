@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getCards } from "./api/getCards";
 import { deleteCard } from "./api/deleteCard";
@@ -13,8 +13,10 @@ type Card = {
 
 const Deck = () => {
   const [cards, setCards] = useState<Card[]>([]); // cards state
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  // const [title, setTitle] = useState<string>("");
+  // const [description, setDescription] = useState<string>("");
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
   const { id } = useParams(); // get id from url
 
   useEffect(() => {
@@ -45,26 +47,33 @@ const Deck = () => {
   const handleCreateCard = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
+
       if (!id) return;
+      if (!titleRef.current || !descriptionRef.current) return;
+      const title = titleRef.current?.value;
+      const description = descriptionRef.current?.value;
       const res = await createCard(id, title, description); // create new card
       const cards = res.data.cards;
       setCards(cards); // set cards state
-      setTitle(""); // reset text
-      setDescription(""); // reset text
+      // setTitle(""); // reset text
+      // setDescription(""); // reset text
+      titleRef.current.value = "";
+      descriptionRef.current.value = "";
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleTitleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
+  // const handleTitleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setTitle(e.target.value);
+  //   console.debug(e.target.value);
+  // };
 
-  const handleDescriptionChange = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDescription(e.target.value);
-  };
+  // const handleDescriptionChange = async (
+  //   e: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   setDescription(e.target.value);
+  // };
 
   return (
     <>
@@ -79,21 +88,11 @@ const Deck = () => {
         <div className="card-input-container">
           <div className="card-input">
             <label>Title</label>
-            <input
-              type="text"
-              value={title}
-              required
-              onChange={(e) => handleTitleChange(e)}
-            ></input>
+            <input type="text" required ref={titleRef}></input>
           </div>
           <div className="card-input">
             <label>Description</label>
-            <input
-              type="text"
-              value={description}
-              required
-              onChange={(e) => handleDescriptionChange(e)}
-            ></input>
+            <input type="text" required ref={descriptionRef}></input>
           </div>
         </div>
         <button
