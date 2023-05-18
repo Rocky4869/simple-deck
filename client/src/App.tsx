@@ -42,6 +42,11 @@ function App() {
     fetchDecks();
   }, []);
 
+  useEffect(() => {
+    if (!inputRef.current) return;
+    inputRef.current.focus();
+  }, []);
+
   const handleDeleteDeck = async (id: string) => {
     try {
       await deleteDeck(id); // delete deck
