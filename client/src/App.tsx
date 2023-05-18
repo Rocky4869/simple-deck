@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./App.css";
 import { Link } from "react-router-dom";
 import { getDecks } from "./api/getDecks";
@@ -12,19 +12,18 @@ type TDeck = {
 };
 
 function App() {
-  const [deckTitle, setDeckTitle] = useState("");
   const [decks, setDecks] = useState<TDeck[]>([]); // array of objects
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDeckTitle(e.target.value);
-  };
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleCreateDeck = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      const res = await createDeck(deckTitle); // create new deck
+      const node = inputRef.current;
+      if (!node) return;
+      const res = await createDeck(node.value); // create new deck
       setDecks((prevDecks) => [...prevDecks, res.data]); // add new deck to state
-      setDeckTitle(""); // reset deck title
+      node.value = ""; // clear input field
     } catch (err) {
       console.log(err);
     }
@@ -65,13 +64,12 @@ function App() {
         <input
           type="text"
           name="deckTitle"
-          value={deckTitle}
-          onChange={handleChange}
           required
+          ref={inputRef}
           style={{
             marginRight: "10px",
           }}
-        ></input>
+        />
         <button type="submit">Create Deck</button>
       </form>
       <div>
